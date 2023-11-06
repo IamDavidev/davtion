@@ -1,5 +1,13 @@
 {
-    "tasks": {
-        "serve": "deno run -A src/mod.ts"
+  "tasks": {
+    "serve": "deno run -A src/mod.ts"
+  },
+  "fmt": {
+    "options": {
+      "semiColons": false,
+      "singleQuote": true,
+      "useTabs": false
     }
+  },
+  "importMap": "./import_map.json"
 }
