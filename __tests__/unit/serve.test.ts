@@ -7,7 +7,6 @@ import { assertEquals } from '$std/assert/assert_equals.ts'
 import { $loadRoutesCore } from '@core/load-routes.core.ts'
 
 export type ApiValidation = Partial<ValidationTargets>
-export type Route = ToSchema<'get', '/search', ApiValidation, {}>
 
 export type ServerType = Hono<Env>
 
@@ -17,6 +16,7 @@ it('Example ', async () => {
    */
   const data = { user: 'user', password: 'password' }
 
+  type Route = ToSchema<'get', '/search', ApiValidation, typeof data>
   /**
    * @When
    */
@@ -36,7 +36,7 @@ describe('Api health', () => {
     /**
      * Parse types for warnings
      */
-    type HealthSchemaApi = ToSchema<'get', '/health', ApiValidation, {}>
+    type HealthSchemaApi = ToSchema<'get', '/health', ApiValidation, '/'>
     type HonoWithHealth = Hono<Env, HealthSchemaApi, '/'>
 
     /**
