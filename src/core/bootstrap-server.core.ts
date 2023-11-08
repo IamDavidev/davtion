@@ -4,7 +4,7 @@ interface ForInitiableServer {
   /**
    * @description port to listen
    */
-  port?: number | string
+  port?: number
   /**
    * @description abort controller is used to abort the server when the server is not needed
    */
