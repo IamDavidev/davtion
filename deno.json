@@ -1,5 +1,6 @@
 {
   "tasks": {
+    "dev": "deno run -A --watch src/mod.ts",
     "serve": "deno run -A src/mod.ts"
   },
   "fmt": {
