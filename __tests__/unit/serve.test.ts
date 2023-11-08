@@ -4,7 +4,7 @@ import { Env, Hono, ToSchema } from 'npm:hono'
 
 import { describe, it } from '$std/testing/bdd.ts'
 import { assertEquals } from '$std/assert/assert_equals.ts'
-import { $loadRoutesCore } from '../../src/core/load-routes.core.ts'
+import { $loadRoutesCore } from '@core/load-routes.core.ts'
 
 export type ApiValidation = Partial<ValidationTargets>
 export type Route = ToSchema<'get', '/search', ApiValidation, {}>
