@@ -10,9 +10,9 @@ name: Deno
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   pull_request:
-    branches: ["main"]
+    branches: ['main']
 
 permissions:
   contents: read
@@ -21,13 +21,17 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      DENO_INSTALL: ${{ github.workspace }}/.deno
+      PATH: ${{ github.workspace }}/.deno/bin:$PATH
+
     steps:
       - name: Setup repo
         uses: actions/checkout@v3
 
       - name: Setup Deno
         # uses: denoland/setup-deno@v1
-        uses: denoland/setup-deno@61fe2df320078202e33d7d5ad347e7dcfa0e8f31  # v1.1.2
+        uses: denoland/setup-deno@61fe2df320078202e33d7d5ad347e7dcfa0e8f31 # v1.1.2
         with:
           deno-version: v1.x
 
