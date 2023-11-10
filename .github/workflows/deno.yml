@@ -22,8 +22,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DENO_INSTALL: ${{ github.workspace }}/.deno
-      PATH: ${{ github.workspace }}/.deno/bin:$PATH
+      API_VERSION_PREFIX: v1
+      PORT: 8080
 
     steps:
       - name: Setup repo
