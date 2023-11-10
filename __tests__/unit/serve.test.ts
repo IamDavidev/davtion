@@ -11,8 +11,12 @@ import { assertEquals } from '$std/assert/assert_equals.ts'
  * Load internal modules
  */
 import { $loadRoutesCore } from '@core/load-routes.core.ts'
+import { API_VERSION_PREFIX } from '@config/env.config.ts'
+import { ROUTES } from '@core/routes.core.ts'
 
 type ApiValidation = Partial<ValidationTargets>
+
+const version = API_VERSION_PREFIX
 
 describe('Api health', () => {
   it('Should return status 200', async () => {
@@ -53,7 +57,7 @@ describe('Api Update Image', () => {
      */
     type UpdateImageSchemaApi = ToSchema<
       'get',
-      `/api/v100/update-image`,
+      typeof ROUTES.IMAGE.UPLOAD,
       ApiValidation,
       typeof expected
     >
@@ -64,7 +68,10 @@ describe('Api Update Image', () => {
      * @When
      */
     $loadRoutesCore({ app })
-    const res = await testClient(app).api.v100['update-image'].$get()
+    // deno-lint-ignore no-explicit-any
+    const res = await (testClient(app) as any).api[version][
+      'image-upload'
+    ].$get()
     const resJson = await res.json()
     /**
      * @Then
