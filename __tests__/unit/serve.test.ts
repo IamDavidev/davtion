@@ -68,10 +68,12 @@ describe('Api Update Image', () => {
      * @When
      */
     $loadRoutesCore({ app })
+
     // deno-lint-ignore no-explicit-any
     const res = await (testClient(app) as any).api[version][
-      'image-upload'
+      ROUTES.IMAGE.UPLOAD
     ].$get()
+
     const resJson = await res.json()
     /**
      * @Then
