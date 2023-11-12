@@ -1,85 +1,75 @@
+// deno-lint-ignore-file no-explicit-any
 /**
  * Load libraries
  */
-import { testClient } from 'npm:hono/testing'
-import { ValidationTargets } from 'npm:hono'
-import { Env, Hono, ToSchema } from 'npm:hono'
-import { describe, it } from '$std/testing/bdd.ts'
 import { assertEquals } from '$std/assert/assert_equals.ts'
+import { beforeAll, describe, it } from '$std/testing/bdd.ts'
+import { Env, Hono, Schema, ValidationTargets } from 'npm:hono'
+import { testClient } from 'npm:hono/testing'
 
 /**
  * Load internal modules
  */
-import { $loadRoutesCore } from '@core/load-routes.core.ts'
 import { API_VERSION_PREFIX } from '@config/env.config.ts'
-import { ROUTES } from '@core/routes.core.ts'
+import { $loadRoutesCore } from '@core/load-routes.core.ts'
 
 type ApiValidation = Partial<ValidationTargets>
 
-const version = API_VERSION_PREFIX
-
 describe('Api health', () => {
-  it('Should return status 200', async () => {
-    /**
-     * Parse types for warnings
-     */
-    type HealthSchemaApi = ToSchema<'get', '/health', ApiValidation, '/'>
-    type HonoWithHealth = Hono<Env, HealthSchemaApi, '/'>
+  const version = API_VERSION_PREFIX
 
-    /**
-     * @Given
-     */
-    const app = new Hono() as HonoWithHealth
+  let client: any
 
-    /**
-     * @When
-     */
-    $loadRoutesCore({ app })
-    const res = await testClient(app).health.$get()
+  beforeAll(() => {
+    const server = new Hono() as Hono<Env, Schema, '/'>
 
-    /**
-     * @Then
-     */
-    assertEquals(res.status, 200)
+    $loadRoutesCore({ app: server })
+    client = testClient(server)
   })
-})
 
-describe('Api Update Image', () => {
-  it('Should return image id', async () => {
+  it('Should return status 200 in home page', async () => {
     /**
      * @Given
      */
-    const expected = { status: 200, message: 'OK' }
-    const app = new Hono() as HonoWithUpdateImage
-
-    /**
-     * Parse types for warnings
-     */
-    type UpdateImageSchemaApi = ToSchema<
-      'get',
-      typeof ROUTES.IMAGE.UPLOAD,
-      ApiValidation,
-      typeof expected
-    >
-
-    type HonoWithUpdateImage = Hono<Env, UpdateImageSchemaApi, '/'>
+    const expectedStatus = 200
+    const expectedResponse = {
+      server: 'Davtion Api'
+    }
 
     /**
      * @When
      */
-    $loadRoutesCore({ app })
+    const request = await client.api[version][''].$get()
+    const response = await request.json()
 
-    // deno-lint-ignore no-explicit-any
-    const res = await (testClient(app) as any).api[version][
-      ROUTES.IMAGE.UPLOAD
-    ].$get()
-
-    const resJson = await res.json()
     /**
      * @Then
      */
 
-    assertEquals(resJson, expected)
-    assertEquals(res.status, 200)
+    assertEquals(request.status, expectedStatus)
+    assertEquals(response, expectedResponse)
+  })
+
+  it('should return ok in healt route', async () => {
+    /**
+     * @Given
+     */
+    const expectedStatus = 200
+    const expectedResponse = {
+      status: 200,
+      message: 'OK'
+    }
+
+    /**
+     * @When
+     */
+    const request = await client.api[version].health.$get()
+    const response = await request.json()
+
+    /**
+     * @Then
+     */
+    assertEquals(request.status, expectedStatus)
+    assertEquals(response, expectedResponse)
   })
 })

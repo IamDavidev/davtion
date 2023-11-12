@@ -13,10 +13,43 @@ interface ForLoaderRoutes {
 export class UploadImageRoute extends Route {
   protected path = ROUTES.IMAGE.UPLOAD
 
-  protected method = HTTP_METHOD.GET
+  protected method = HTTP_METHOD.POST
 
-  protected handler(ctx: Context<Env, typeof this.path, Input>) {
+  protected async handler(
+    ctx: Context<Env, typeof this.path, Input>
+  ): Promise<Response> {
+    const formData = await ctx.req.formData()
+    const file = formData.get('file') as File
+
+    if (!file) return ctx.json({ status: 400, message: 'Bad Request' })
+
+    const arr = await file.arrayBuffer()
+
+    Deno.writeFile('test.png', new Uint8Array(arr))
+
     return ctx.json({ status: 200, message: 'OK' })
+  }
+}
+
+export class HealthRoute extends Route {
+  protected path = 'health'
+  protected method: HTTP_METHOD = HTTP_METHOD.GET
+
+  protected handler(ctx: Context<Env, string, Input>): Response {
+    return ctx.json({ status: 200, message: 'OK' })
+  }
+}
+
+export class HomeRoute extends Route {
+  protected path = ''
+  protected method: HTTP_METHOD = HTTP_METHOD.GET
+
+  protected handler(
+    ctx: Context<Env, string, Input>
+  ): Response | Promise<Response> {
+    return ctx.json({
+      server: 'Davtion Api'
+    })
   }
 }
 
@@ -24,6 +57,8 @@ export function $loadRoutesCore({ app }: ForLoaderRoutes) {
   app.use('*', logger())
 
   new UploadImageRoute(app).load()
-  app.get('/', c => c.json({ server: 'Davtion Api' }))
-  app.get('/health', c => c.json({ status: 200, message: 'OK' }))
+  new HealthRoute(app).load()
+  new HomeRoute(app).load()
+
+  app
 }

@@ -1,4 +1,4 @@
-import { Context, Env, Hono } from 'npm:hono'
+import { Context, Env, Hono, Input } from 'npm:hono'
 // deno-lint-ignore-file
 
 import { API_VERSION_PREFIX } from '@config/env.config.ts'
@@ -22,8 +22,9 @@ export abstract class Route {
   protected abstract path: string
   protected abstract method: HTTP_METHOD
 
-  // deno-lint-ignore no-explicit-any
-  protected abstract handler(ctx: Context<Env, typeof this.path, any>): Response
+  protected abstract handler(
+    ctx: Context<Env, typeof this.path, Input>
+  ): Response | Promise<Response>
 
   private genPath(): string {
     return `/api/${API_VERSION_PREFIX}/${this.path}`
@@ -36,7 +37,6 @@ export abstract class Route {
   public load(): void {
     const path = this.genPath()
     this.printPath(path)
-
     /**
      * @description
      *
