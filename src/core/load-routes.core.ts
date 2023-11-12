@@ -1,4 +1,4 @@
-import { Context, Hono } from 'npm:hono'
+import { Context, Env, Hono, Input } from 'npm:hono'
 import { logger } from 'npm:hono/logger'
 
 import { HTTP_METHOD, ROUTES, Route } from '@core/routes.core.ts'
@@ -13,10 +13,10 @@ interface ForLoaderRoutes {
 export class UploadImageRoute extends Route {
   protected path = ROUTES.IMAGE.UPLOAD
 
-  protected method = HTTP_METHOD.POST
+  protected method = HTTP_METHOD.GET
 
-  protected handler(ctx: Context) {
-    return ctx.text('ok')
+  protected handler(ctx: Context<Env, typeof this.path, Input>) {
+    return ctx.json({ status: 200, message: 'OK' })
   }
 }
 
