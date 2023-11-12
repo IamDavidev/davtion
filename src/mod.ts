@@ -6,7 +6,7 @@ import { $loadRoutesCore } from '@core/load-routes.core.ts'
 
 const app = new Hono()
 
-const port = typeof PORT === 'number' ? PORT : 8080
+const port = PORT
 const abortController = new AbortController()
 
 $loadRoutesCore({ app })

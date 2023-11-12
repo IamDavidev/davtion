@@ -17,4 +17,4 @@ export const env = (await load()) as Record<(typeof envsKeys)[number], string>
 export const API_VERSION_PREFIX =
   env.API_VERSION_PREFIX ?? defaultEnvs.API_VERSION_PREFIX
 
-export const PORT = env.PORT ?? defaultEnvs.PORT
+export const PORT = Number(env.PORT) ?? defaultEnvs.PORT
