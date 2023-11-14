@@ -54,11 +54,10 @@ export class HomeRoute extends Route {
 }
 
 export function $loadRoutesCore({ app }: ForLoaderRoutes) {
-  app.use('*', logger())
-
+  /**
+   * Load all routes
+   */
   new UploadImageRoute(app).load()
   new HealthRoute(app).load()
   new HomeRoute(app).load()
-
-  app
 }
