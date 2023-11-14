@@ -1,5 +1,4 @@
 import { Context, Env, Hono, Input } from 'npm:hono'
-import { logger } from 'npm:hono/logger'
 
 import { HTTP_METHOD, ROUTES, Route } from '@core/routes.core.ts'
 
