@@ -1,6 +1,4 @@
 import { Context, Env, Hono, Input } from 'npm:hono'
-// deno-lint-ignore-file
-
 import { API_VERSION_PREFIX } from '@config/env.config.ts'
 
 export const ROUTES = {

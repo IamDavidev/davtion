@@ -2,9 +2,20 @@
   "version": "3",
   "packages": {
     "specifiers": {
+      "npm:@upstash/redis": "npm:@upstash/redis@1.25.1",
       "npm:hono": "npm:hono@3.9.2"
     },
     "npm": {
+      "@upstash/redis@1.25.1": {
+        "integrity": "sha512-ACj0GhJ4qrQyBshwFgPod6XufVEfKX2wcaihsEvSdLYnY+m+pa13kGt1RXm/yTHKf4TQi/Dy2A8z/y6WUEOmlg==",
+        "dependencies": {
+          "crypto-js": "crypto-js@4.2.0"
+        }
+      },
+      "crypto-js@4.2.0": {
+        "integrity": "sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==",
+        "dependencies": {}
+      },
       "hono@3.9.2": {
         "integrity": "sha512-180NOiMadqU3lGmN6ajPDZvZPWus3a9mtVaAUR9uG0SImngBwRLA8vbnV0oUfUAgFT4nX55sGV9dVA06OuikHA==",
         "dependencies": {}
