@@ -24,8 +24,8 @@ jobs:
     env:
       API_VERSION_PREFIX: v1
       PORT: 8080
-      DATABASE_URL: ''
-      DATABASE_TOKEN: ''
+      DATABASE_URL: 'Database URL'
+      DATABASE_TOKEN: 'Database Token'
 
     steps:
       - name: Setup repo
