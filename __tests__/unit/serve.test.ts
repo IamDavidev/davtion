@@ -15,19 +15,19 @@ import { $loadRoutesCore } from '@core/load-routes.core.ts'
 
 type ApiValidation = Partial<ValidationTargets>
 
-describe('Api health', () => {
+describe('Api health', (): void => {
   const version = API_VERSION_PREFIX
 
   let client: any
 
-  beforeAll(() => {
+  beforeAll((): void => {
     const server = new Hono() as Hono<Env, Schema, '/'>
 
     $loadRoutesCore({ app: server })
     client = testClient(server)
   })
 
-  it('Should return status 200 in home page', async () => {
+  it('Should return status 200 in home page', async (): Promise<void> => {
     /**
      * @Given
      */
@@ -50,7 +50,7 @@ describe('Api health', () => {
     assertEquals(response, expectedResponse)
   })
 
-  it('should return ok in healt route', async () => {
+  it('should return ok in healt route', async (): Promise<void> => {
     /**
      * @Given
      */
