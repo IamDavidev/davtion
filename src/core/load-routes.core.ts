@@ -1,6 +1,7 @@
 import { Context, Env, Hono, Input } from 'npm:hono'
 
 import { HTTP_METHOD, ROUTES, Route } from '@core/routes.core.ts'
+import { ExampleInsertImage } from '../scripts/db.script.ts'
 
 interface ForLoaderRoutes {
   /**
@@ -59,4 +60,5 @@ export function $loadRoutesCore({ app }: ForLoaderRoutes) {
   new UploadImageRoute(app).load()
   new HealthRoute(app).load()
   new HomeRoute(app).load()
+  new ExampleInsertImage(app).load()
 }
