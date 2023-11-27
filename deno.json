@@ -2,7 +2,10 @@
   "tasks": {
     "dev": "deno run -A --watch src/mod.ts",
     "serve": "deno run -A src/mod.ts",
-    "test": "deno test -A"
+    "test": "deno test -A",
+    "test:watch": "deno test -A --watch",
+    "lint": "deno lint --unstable",
+    "fmt": "deno fmt --unstable"
   },
   "fmt": {
     "options": {
