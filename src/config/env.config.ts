@@ -1,7 +1,5 @@
 import { load } from '$std/dotenv/mod.ts'
 
-type ENV = Record<(typeof envsKeys)[number], string>
-
 const envs = {
   API_VERSION_PREFIX: 'API_VERSION_PREFIX',
   PORT: 'PORT',
@@ -17,6 +15,8 @@ const defaultEnvs = {
 }
 
 const envsKeys = Object.keys(envs) as (keyof typeof envs)[]
+
+type ENV = Record<(typeof envsKeys)[number], string>
 
 export const env = (await load()) as ENV
 
