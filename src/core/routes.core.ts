@@ -15,6 +15,7 @@ export enum HTTP_METHOD {
 }
 
 export abstract class Route {
+  private basePath = '/api'
   constructor(private readonly app: Hono) {}
 
   protected abstract path: string
@@ -25,7 +26,7 @@ export abstract class Route {
   ): Response | Promise<Response>
 
   private genPath(): string {
-    return `/api/${API_VERSION_PREFIX}/${this.path}`
+    return `${this.basePath}/${API_VERSION_PREFIX}/${this.path}`
   }
 
   private printPath(path: string) {
