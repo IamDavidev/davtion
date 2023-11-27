@@ -1,4 +1,6 @@
 import { Hono } from 'npm:hono'
+import { $loadMiddlewaresCore } from '@core/load-middlewares.core.ts'
+import { $loadRoutesCore } from '@core/load-routes.core.ts'
 
 interface ForInitiableServer {
   /**
@@ -9,20 +11,17 @@ interface ForInitiableServer {
    * @description abort controller is used to abort the server when the server is not needed
    */
   abortController: AbortController
-  /**
-   * @description Instace of Hono
-   * @default new Hono()
-   */
-  app?: Hono
 }
 
-export function $bootstrapServerCore({
-  abortController,
-  port = 8080,
-  app = new Hono()
-}: ForInitiableServer) {
+export function $bootstrapServerCore(
+  app: Hono,
+  { abortController, port = 8080 }: ForInitiableServer
+) {
   try {
     const signal = abortController.signal
+
+    $loadMiddlewaresCore({ app })
+    $loadRoutesCore({ app })
 
     Deno.serve(
       {
